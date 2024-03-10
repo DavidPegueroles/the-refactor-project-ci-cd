@@ -57,3 +57,15 @@ jobs:
           context: ./front-end-app
           push: true
           tags: ghcr.io/${{ github.actor }}/ci-cd-example-front:latest
+
+      - name: Install Netlify
+        run: npm install netlify-cli@17.10.1 -g
+
+      - name: Deploy to Netlify
+        id: netlify_deploy
+        run: |
+          netlify deploy \
+            --dir dist \
+            --site ${{ secrets.NETLIFY_SITE_ID }} \
+            --auth ${{ secrets.NETLIFY_API_TOKEN }} \
+            --prod
